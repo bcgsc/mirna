@@ -1,0 +1,14 @@
+Annotation of a microRNA Database
+---------------------------------
+
+annotate.pl annotates each aligned read in each sam file in the project directory, using miRBase and UCSC reference databases. All databases must have entries in the {$BASEDIR}/config/db_connections.cfg file.
+
+Run using:
+
+annotate.pl -m mirbase -u ucsc_database -o species_code -p project_dir
+
+mirbase - mirbase database
+ucsc_database - ucsc genome browser database tables
+species_code - the organism code used in mirBase mirna_species table (eg. hsa)
+project_dir - base directory that will be searched for sam files. Note the search will go through every file and subdirectory in the base directory, so it is not advisable to put non-project related subdirectories in the project base directory.
+
