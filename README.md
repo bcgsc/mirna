@@ -4,7 +4,7 @@ BCGSC miRNA Profiling Pipeline Documentation
 
 The BCGSC miRNA Profiling Pipeline produces expression profiles of known miRNAs from BWA-aligned BAM files and generates summary reports and graphs describing the results.
 
-Chu,Andy, Gordon Robertson, Denise Brooks, Andrew J. Mungall, Inanc Birol, Robin Coope, Yussanne Ma, et. al., Large-scale profiling of microRNAs for The Cancer Genome Atlas, Nucl. Acids Res. (2015) doi: 10.1093/nar/gkv808 First published online: August 13, 2015
+Chu, Andy, Gordon Robertson, Denise Brooks, Andrew J. Mungall, Inanc Birol, Robin Coope, Yussanne Ma, et. al., Large-scale profiling of microRNAs for The Cancer Genome Atlas, Nucl. Acids Res. (2015) doi: 10.1093/nar/gkv808 First published online: August 13, 2015
 <http://nar.oxfordjournals.org/content/early/2015/08/13/nar.gkv808.full>
 
 The code used for trimming adapters and generating the required read-length summary table is available here: <http://www.bcgsc.ca/platform/bioinfo/software/adapter-trimming-for-small-rna-sequencing>
