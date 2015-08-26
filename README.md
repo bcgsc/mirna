@@ -429,8 +429,12 @@ TCGA Level 3 archives for miRNA-seq data include 2 files: miRNA.quantification.t
 
 3.What is crossmapping?
 -----------------------
-The cross-map flag in the data files indicates when reads are mapped to different miRNAs. (Functionally identical miRNAs described below are not considered cross-mapped.) The flag in miRNA.quantification.txt simply indicates whether any of the reads that make up the total count for the precursor miRNA are crossmapped. The flag in isoform.quantification.txt represents whether the sequence corresponding to the coordinates of the read have been cross-mapped.
-The profiling results include a crossmapped.txt file, which lists all the crossmapped miRNAs and their read counts. Depending on the analysis, the read count for each crossmap may be ignored, counted once for every miRNA that it maps to, or averaged across the number of miRNAs that it maps to.
+The trimmed sequence reads largely represent isomiRs, so are short (22±3 nt). Their 5’ and 3’ ends can differ from miRBase reference mature strand coordinates, particularly at the 3’ end. As well, some miRNAs occur as families of closely related sequences that have identical or nearly identical mature strand sequences (and MIMAT accession IDs). These factors result in reads crossmapping and multimapping, which we address as follows (see the publication for more details).
+
+A short isomiR read may map exactly to mature strands whose sequences are similar but not identical, when the read sequence does not capture the bases that distinguish these miRNAs (e.g. hsa-mir-30a at 6q13 and hsa-mir-30e at 1p34.2, which differ at position 18). We report such a read as cross-mapped, and we increment the read count for each MIMAT that it mapped to.
+
+A read can multimap to identical mature strands from a miRNA family whose members are in different locations in the genome (e.g. miR-181a-5p=MIMAT0000256 is present in hsa-mir-181a-1 at 1q32.1 and in hsa-mir-181a-2 at 9q33.3). When we annotate a read as miR-181a-5p, we increment the read count for this MIMAT, and we increment the read count of one of the genomic locations for the family’s stem-loops. See below.
+
 
 4.What are the different miRNAs with the same mature strand?
 ------------------------------------------------------------
