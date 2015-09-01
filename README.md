@@ -413,21 +413,18 @@ Annotation priorities used to resolve multiple matches, from highest to lowest p
 miRNA FAQ
 =========
 
-1.What are precursors? What are mature strands?
+1. What are precursors? What are mature strands?
 -----------------------------------------------
 A miRNA mature strand is the functional piece of miRNA that is transcribed from one arm of the precursor miRNA. Historically, one of the arms of the precursor express the "mature strand", and the other arm expresses a "star strand" which is thought to be nonfunctional and degraded. It has now been shown that both arms express functional miRNAs, and so both arms are now known as mature strands. On miRBase, the precursor miRNA has a MIxxxxxxx accession, whereas the mature strands have a MIMATxxxxxxx accession.
 
-2.What are the two .quantification.txt files in the Level 3 archives, and how to I extract data from them?
+2. What are the two .quantification.txt files in the Level 3 archives, and how to I extract data from them?
 ----------------------------------------------------------------------------------------------------------
 TCGA Level 3 archives for miRNA-seq data include 2 files: miRNA.quantification.txt and isoform.quantification.txt. miRNA.quantification.txt is a high level view of the miRNA, considering the expression of any region of the precursor miRNA, even those completely outside the mature strands. isoform.quantification file breaks the read alignments into detail, allowing one to extract data of any resolution from this file:
--   The sum of read counts by the precursor miRNA name will result in
-    counts equal to miRNA.quantification.txt.
--   The sum of read counts by MIMAT accession, excluding reads with
-    other annotations will result in the counts for each mature strand.
--   The sum of read counts by coordinates will result in counts for each
-    miRNA isoform.
+-   The sum of read counts by the precursor miRNA name (in the miRNA_ID column) will result in counts equal to miRNA.quantification.txt.
+-   The sum of read counts by MIMAT accession (by MIMATxxxxxxxx in the miRNA_region column), excluding reads with other annotations, will result in the counts for each mature strand. (Note: In this case, the reads_per_million_miRNA_mapped (rpm) column is not typically summed to represent the rpm value for a MIMAT ID. Instead, the rpm for a MIMAT is generated from the summed counts for a MIMAT divided by the total summed MIMAT read counts for a sample multiplied by 1,000,000.) 
+-   The sum of read counts by coordinates (in the isoforms_coords column) will result in counts for each miRNA isoform.
 
-3.What is crossmapping?
+3. What is crossmapping?
 -----------------------
 The trimmed sequence reads largely represent isomiRs, so are short (22±3 nt). Their 5’ and 3’ ends can differ from miRBase reference mature strand coordinates, particularly at the 3’ end. As well, some miRNAs occur as families of closely related sequences that have identical or nearly identical mature strand sequences (and MIMAT accession IDs). These factors result in reads crossmapping and multimapping, which we address as follows (see the publication for more details).
 
@@ -436,7 +433,7 @@ A short isomiR read may map exactly to mature strands whose sequences are simila
 A read can multimap to identical mature strands from a miRNA family whose members are in different locations in the genome (e.g. miR-181a-5p=MIMAT0000256 is present in hsa-mir-181a-1 at 1q32.1 and in hsa-mir-181a-2 at 9q33.3). When we annotate a read as miR-181a-5p, we increment the read count for this MIMAT, and we increment the read count of one of the genomic locations for the family’s stem-loops. See below.
 
 
-4.What are the different miRNAs with the same mature strand?
+4. What are the different miRNAs with the same mature strand?
 ------------------------------------------------------------
 Many miRNAs have names in the format of hsa-mir-21, ie. organism-"mir"-microRNA. However, some miRNA names have an additional suffix, eg. hsa-mir-101-1 and hsa-mir-101-2. Note that miRNAs such as hsa-mir-29a and hsa-mir-29b are not an example of this; they are simply related, but distinct miRNAs.
 
@@ -451,7 +448,7 @@ The mature sequence hsa-miR-101-3p has the same accession (and sequence) in both
 
 During miRNA profiling, if a read sequence has enough bases outside the canonical mature sequence to unambiguously assign it to a particular miRNA ID, then it does so. However, if the read maps to the mature strand, eg. MIMAT0000099, then there is no way to unambiguously assign it as hsa-mir-101-1 or 101-2, and one of the miRNA IDs is arbitrarily (not randomly) assigned. For this reason, when working at the precursor level, it is suggested that miRNA counts are summed to get one count for hsa-mir-101. When working at any higher resolution, there is no ambiguity when working with mature strand names or accessions. Counts can be summed by mature accession, and the precursor name can be ignored.
 
-Which read alignments are counted for miRNA expression profiles?
+5. Which read alignments are counted for miRNA expression profiles?
 ----------------------------------------------------------------
 
 For a read annotation to be used the following rules are applied by examining the NM, X1, X0, XA, XC, and or XD fields in an annotated SAM file.
@@ -483,7 +480,7 @@ primary alignment is not used.
 -	The mapping info (XA tag) for each primary alignment considered is split into chromosome, position, cigar, and NM info
 -	If there are annotations in the XD field, these are used to determine which read has the highest annotation priority (annotation priorities are described in the main documentation). Otherwise, the annotations in the XC field are used. Basically, all annotations for seconary alignments are compared to the annotation for the primary alignment; if a secondary alignment has a higher priority annotation than the primary alignment, that read becomes the primary and the next alignment is then compared to the new primary.
 
-**alignment\_stats.pl current settings:**
+The default settings can be changed by editing the following lines in the alignment_stats.pl
 
 ```perl
 my $MAX_XA = 10;  #number of alignments a read can have
@@ -495,6 +492,7 @@ my $MAX_NM = 0;   #most mismatches allowed in the alignment, according to NM fla
 my $MAX_X0 = 3;   #most alignments a read can have before it's ignored
 ```
 
+-       The number of alignment mappings allowed (XA)
 -	The number of mismatches (NM tag) must be zero
 -	The number of primary alignments (X0 tag) must be 3 or fewer
 
@@ -540,3 +538,4 @@ sub get_annot_key {
     $index_used = $i;
  }
 ```
+###maintainer: dbrooks@bcgsc.ca
