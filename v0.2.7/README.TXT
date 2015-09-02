@@ -1,15 +1,19 @@
-GSC MiRNA Analysis Pipeline v0.2.7
+miRNA Analysis Pipeline v0.2.7
+
+The TCGA miRNAseq data generation process, including strand-specific library construction,
+sequencing, and computational processing is described in:
+Chu A, Robertson G, Brooks D, Mungall AJ, Birol I, Coope R, Ma Y, Jones S, Marra MA. Large-scale
+profiling of microRNAs for The Cancer Genome Atlas. Nucleic Acids Res. 2015 Aug 13.
 
 Aim:
 Given a set of aligned reads in 1 or more .sam files, produce an annotated version of the .sam where each read is given an annotation based on its coordinate. Additional summary information about the content of each sample is also generated, including miRNA species and other genomic features found.
 
 To Use:
-The code package consists of 3 subdirectories,
-apps
+The code package consists of 2 subdirectories,
 code
-config.
+config
 
-apps contain external applications required to run the pipeline. Although applications do not have to be stored in this directory, the following binaries must be available on your system: Perl, R. In addition, perl requires the MySQL DBI library. R is used to generate summary graphs, and may be disregarded if graphs aren't desired.
+Note: an apps subdirectory can be created to contain external applications required to run the pipeline (e.g. there can be three subdirectories: apps, code, and config). Although applications do not have to be stored in this directory, the following binaries must be available on your system: Perl, R. In addition, perl requires the MySQL DBI library. R is used to generate summary graphs, and may be disregarded if graphs aren't desired.
 
 config contains configuration files which points the code to all necessary inputs.
 db_connections.cfg contains parameters to access MySQL databases containing UCSC and miRBase information. The db_name is used when providing the database source for various script parameters. You must have a database connection to a miRBase instance and a UCSC database instance for annotations of miRNAs and other non-coding RNAs respectively. The server name of the database is the <host> parameter, and the login and password are the <user> and <password> parameters.
