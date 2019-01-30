@@ -608,7 +608,7 @@ sub record_isoform {
 	my $isoforms = shift;
 	my ($xi, $chr, $pos, $taglength, $strand, $seq, $crossmapped_flag, $xd) = @_;
 
-	my $coord_end = $pos + $taglength;
+	my $coord_end = $pos + $taglength - 1;
 	my $coord = "$chr: $pos - $coord_end; $strand"; #standard format for coordinate in isoform hash
 	if (exists $isoforms->{$xi} && exists $isoforms->{$xi}{$coord}) {
 		$isoforms->{$xi}{$coord}{count}++;
