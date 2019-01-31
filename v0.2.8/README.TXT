@@ -1,4 +1,4 @@
-miRNA Analysis Pipeline v0.2.7
+miRNA Analysis Pipeline v0.2.8
 
 The TCGA miRNAseq data generation process, including strand-specific library construction, sequencing, and computational processing is described in:
 Chu A, Robertson G, Brooks D, Mungall AJ, Birol I, Coope R, Ma Y, Jones S, Marra MA. Large-scale profiling of microRNAs for The Cancer Genome Atlas. Nucleic Acids Res. 2015 Aug 13.

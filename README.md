@@ -25,9 +25,9 @@ The following conventions are used in this document to differentiate between a w
 Pipeline overview
 =================
 
-The analysis pipeline takes as input a .sam file containing BWA alignments of trimmed reads for a sample and generates a) annotations of the reads, b) expression profiles of features annotated in the sample, c) summarized miRNA expression as TCGA (The Cancer Genome Atlas) formatted expression quantification reports and as expression matrices, and d) graphs of overall feature representation, filtered results, and quality metrics. The miRNA analysis pipeline version v0.2.7 has been tested with BWA 0.5.7.
+The analysis pipeline takes as input a .sam file containing BWA alignments of trimmed reads for a sample and generates a) annotations of the reads, b) expression profiles of features annotated in the sample, c) summarized miRNA expression as TCGA (The Cancer Genome Atlas) formatted expression quantification reports and as expression matrices, and d) graphs of overall feature representation, filtered results, and quality metrics. The miRNA analysis pipeline version v0.2.8 has been tested with BWA 0.5.7.
 
-External applications required to run the pipeline can be placed in the apps folder in the top pipeline directory. e.g. <BASEDIR>/v0.2.7/apps/. Although applications do not have to be stored in this directory, Perl (perl-5.10-x86\_64) and R (R-2.12.0) must be available on your system. In addition, Perl requires the MySQL DBI library. R is used to generate summary graphs, and may be disregarded if graphs are not desired.
+External applications required to run the pipeline can be placed in the apps folder in the top pipeline directory. e.g. <BASEDIR>/v0.2.8/apps/. Although applications do not have to be stored in this directory, Perl (perl-5.10-x86\_64) and R (R-2.12.0) must be available on your system. In addition, Perl requires the MySQL DBI library. R is used to generate summary graphs, and may be disregarded if graphs are not desired.
 
 Pipeline parameters
 ===================
@@ -150,7 +150,7 @@ There are two configuration files which must be modified:
 -   **db\_connections.cfg** contains database settings to access MySQL databases containing the necessary UCSC and miRBase information. You must have a database connection to a miRBase instance and a UCSC database instance for annotations of miRNAs and other non-coding RNAs respectively. &lt;db\_name&gt; field provides the database source for various script parameters &lt;host&gt; is the server name of the database. &lt;user&gt; and &lt;password&gt; are the user-specific login and password
 -   **pipeline\_params.cfg** is provided for additional, optional settings such as the path to an Rscript binary for the optional graphing functions, e.g. Rscript=&lt;BASEDIR&gt;/apps/R-2.12.0/lib64/R/bin/Rscript
 
-There is one additional script that must be modified with the path to perl 5. Modify **profile.sh** so that it points to the appropriate Perl to use for the scripts. Run source on this to generate the environment, e.g. {cluster-host}~> source <BASEDIR>/v0.2.7/config/profile.sh
+There is one additional script that must be modified with the path to perl 5. Modify **profile.sh** so that it points to the appropriate Perl to use for the scripts. Run source on this to generate the environment, e.g. {cluster-host}~> source <BASEDIR>/v0.2.8/config/profile.sh
 
 Annotate the .sam files
 ========================
@@ -187,7 +187,7 @@ Appropriate miRbase and UCSC database access information (database name, host, u
 The annotation script requires the names of the desired miRbase and UCSC databases listed in db\_connections.cfg, the miRbase species code to use (e.g. hsa for human), and the path to the top project directory (i.e. the directory where the LIBID subdirectories are located).
 
 ```bash
-{cluster-host}~> perl <BASEDIR>/v0.2.7/code/annotation/annotate.pl -m <mirbase> -u <ucsc_database> -o <species_code> -p <PROJECT>
+{cluster-host}~> perl <BASEDIR>/v0.2.8/code/annotation/annotate.pl -m <mirbase> -u <ucsc_database> -o <species_code> -p <PROJECT>
 ```
 #### **Output:**
 
@@ -211,7 +211,7 @@ Annotated &lt;LIBID&gt;\_&lt;INDEX&gt;.sam files in the &lt;LIBID&gt; subdirecto
 #### **Run alignment\_stats.pl**
 
 ```perl
-{dbhost or xhost}~> perl <BASEDIR>/v0.2.7/code/library_stats/alignment_stats.pl -p <PROJECT>
+{dbhost or xhost}~> perl <BASEDIR>/v0.2.8/code/library_stats/alignment_stats.pl -p <PROJECT>
 ```
 #### **Output**
 
@@ -241,7 +241,7 @@ expression files from &lt;PROJECT&gt;/&lt;LIBID&gt;/&lt;LIBID&gt;\_&lt;INDEX&gt;
 #### **Run tcga.pl**
 
 ```bash
-{dbhost or xhost}~> perl <BASEDIR>/v0.2.7/code/custom\_output/tcga.pl -p <PROJECT>
+{dbhost or xhost}~> perl <BASEDIR>/v0.2.8/code/custom\_output/tcga.pl -p <PROJECT>
 ```
 #### **Output**
 
@@ -279,7 +279,7 @@ mirna\_species.txt files
 **Run expression\_matrix.pl**
 
 ```bash
-{dbhost or xhost}~> perl <BASEDIR>/v0.2.7/code/library\_stats/expression\_matrix.pl -m <mirbase> -o <mirbase\_species\_code> -p <PROJECT>
+{dbhost or xhost}~> perl <BASEDIR>/v0.2.8/code/library\_stats/expression\_matrix.pl -m <mirbase> -o <mirbase\_species\_code> -p <PROJECT>
 ```
 
 	-m is the miRBase database to use, e.g. mirna\_20
@@ -304,7 +304,7 @@ crossmapped.txt files
 #### Run library\_stats/expression\_matrix\_mimat.pl
 
 ```bash
-{dbhost}~> perl <BASEDIR>/v0.2.7/code/library\_stats/tcga/expression\_matrix\_mimat.pl -m <mirbase> -o <mirbase\_species\_code> -p <PROJECT>
+{dbhost}~> perl <BASEDIR>/v0.2.8/code/library\_stats/tcga/expression\_matrix\_mimat.pl -m <mirbase> -o <mirbase\_species\_code> -p <PROJECT>
 ```
 	-m is the miRBase database to use, e.g. mirna\_20
 	-o is the species code used by miRBase for the desired organism. For human, use hsa
@@ -321,7 +321,7 @@ Either rename the isoform.quantification.txt files you want included in the expr
 #### Generate the miRNA adf text file
 
 ```bash
-{dbhost or xhost}~> perl <BASEDIR>/v0.2.7/code/library_stats/tcga/create_adf.pl -m <mirbase> -o <mirbase_species_code> -g <genome_version> -v <mirbase_adf_file>
+{dbhost or xhost}~> perl <BASEDIR>/v0.2.8/code/library_stats/tcga/create_adf.pl -m <mirbase> -o <mirbase_species_code> -g <genome_version> -v <mirbase_adf_file>
 ```
 	-m is the miRBase database to use as listed in the db\_connections.cfg file, e.g. mirna\_20
 	-o is the species code used by miRBase for the desired organism. For human, use hsa.
@@ -334,7 +334,7 @@ miRNA\_ID miRBase\_Ver Accession Genomic\_Coords Precursor\_Seq Mature\_Coords M
 #### Run library\_stats/tcga/expression\_matrix\_mimat.pl
 
 ```bash
-{dbhost or xhost}~> perl <BASEDIR>/v0.2.7/code/library_stats/tcga/expression_matrix_mimat.pl -m <miRNA_adf_file> -p <Level_3_archive_directory>
+{dbhost or xhost}~> perl <BASEDIR>/v0.2.8/code/library_stats/tcga/expression_matrix_mimat.pl -m <miRNA_adf_file> -p <Level_3_archive_directory>
 ```
 	-m miRNA\_ADF is the adf file generated by create\_adf.pl
 	-p the directory where the \*.isoform.quantification.txt files can be found. The script will loop through all isoform.quantification.txt files that it finds in this directory to build the expression matrix.
@@ -351,7 +351,7 @@ The alignment\_stats.csv file and the report files located in each \_features su
 #### Run graph\_libs.pl 
 
 ```bash
-{xhost}~> perl <BASEDIR>/v0.2.7/code/library_stats/graph_libs.pl -p <PROJECT>
+{xhost}~> perl <BASEDIR>/v0.2.8/code/library_stats/graph_libs.pl -p <PROJECT>
 ```
 Make sure that if running this script through an ssh tunnel, X11 forwarding is enabled so that the R graphing libraries can be used. e.g. ~> ssh -X &lt;MYSERVER&gt;
 
@@ -366,16 +366,16 @@ The miRNA annotation pipeline requires the following scripts and software
 -	**adapter trimming script**: http://www.bcgsc.ca/platform/bioinfo/software/adapter-trimming-for-small-rna-sequencing
 -  **BWA 0.5.7** 
 -  **samtools 0.1.7** 
--  **miRNA profiling 0.2.7**
+-  **miRNA profiling 0.2.8**
 
 #### **Description of online documentation files**
 
--   *Pre-alignment processing:* A general description of how adapter trimming is performed is provided in the "1a. Preprocessing" section of the pipeline description at: <BASEDIR>/v0.2.7/DESCRIPTION.txt. Additional description and usage information is available through the publicly available archive http://www.bcgsc.ca/platform/bioinfo/software/adapter-trimming-for-small-rna-sequencing
--   *Annotation:* Overview of miRNA analysis at the BCCA-GSC: &lt;BASEDIR&gt;/v0.2.7/DESCRIPTION.txt. Script usage detailed: &lt;BASEDIR&gt;/v0.2.7/code/annotation/HOWTO.txt
--   *Alignment stats:* &lt;BASEDIR&gt;/v0.2.7/library\_stats/README.txt
--   *Expression:* TCGA formatted miRNA expression reports: &lt;BASEDIR&gt;/v0.2.7/custom\_output/tcga/README.txt File formats for TCGA data files are also available online at: <https://wiki.nci.nih.gov/display/TCGA/miRNASeq
--   *miRNA expression maxtrices:* &lt;BASEDIR&gt;/v0.2.7/library\_stats/README.txt
--   *Optional graphs:* &lt;BASEDIR&gt;/v0.2.7/library\_stats/README.txt
+-   *Pre-alignment processing:* A general description of how adapter trimming is performed is provided in the "1a. Preprocessing" section of the pipeline description at: <BASEDIR>/v0.2.8/DESCRIPTION.txt. Additional description and usage information is available through the publicly available archive http://www.bcgsc.ca/platform/bioinfo/software/adapter-trimming-for-small-rna-sequencing
+-   *Annotation:* Overview of miRNA analysis at the BCCA-GSC: &lt;BASEDIR&gt;/v0.2.8/DESCRIPTION.txt. Script usage detailed: &lt;BASEDIR&gt;/v0.2.8/code/annotation/HOWTO.txt
+-   *Alignment stats:* &lt;BASEDIR&gt;/v0.2.8/library\_stats/README.txt
+-   *Expression:* TCGA formatted miRNA expression reports: &lt;BASEDIR&gt;/v0.2.8/custom\_output/tcga/README.txt File formats for TCGA data files are also available online at: <https://wiki.nci.nih.gov/display/TCGA/miRNASeq
+-   *miRNA expression maxtrices:* &lt;BASEDIR&gt;/v0.2.8/library\_stats/README.txt
+-   *Optional graphs:* &lt;BASEDIR&gt;/v0.2.8/library\_stats/README.txt
 
 ***Table 1.***
 Annotation priorities used to resolve multiple matches, from highest to lowest priority. If a read has more than 1 alignment, and the annotations are different, the priorities from Table 1 are used as long as only 1 alignment is to a miRNA. If there are multiple alignments to different miRNAs (or even different regions of the same miRNA), the read is flagged as cross-mapped and every miRNA annotation is preserved. Using these rules, the reads are summed by annotation, and coverage reports are generated.*
