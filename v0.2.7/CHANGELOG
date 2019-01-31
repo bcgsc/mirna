@@ -1,3 +1,5 @@
+v.0.2.8 
+Changed read alignment end coordinates in the isoform.quantification.txt file to be inclusive. They had been exclusive (i.e. offset by 1).
 v.0.2.7
 Add compatibility with miRBase v20 schema updates.
 Update expression matrix generation scripts to allow samples with 0 miRNA reads by writing a warning to STDERR instead of stopping script.
