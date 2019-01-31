@@ -474,6 +474,7 @@ sub ucsc_hashes {
 				next;
 			}
 			$chr = format_chr($chr, $chr_format, $mt_format);
+                        $start += 1; # change 0-based UCSC databae start coordinate to 1-based
 			addto_overlaphash($repclass_co{$repclass}, $repclass_idx{$repclass}, $chr, $start, $end, $strand, $ref_id);
 		}
 	}
@@ -668,13 +669,16 @@ sub format_ucsc {
 	my @exonends = split(',', $exonends);
 
 	#add 1 to 0 based ucsc coordinates
+	# ucsc database uses 0-based start and 1-based end coordinates
+	# so add 1 to start only, but not end
+	# http://genome.ucsc.edu/FAQ/FAQtracks#tracks1
 	$txstart += 1;
-	$txend += 1;
+#	$txend += 1;
 	$cdsstart += 1;
-	$cdsend += 1;
+#	$cdsend += 1;
 	foreach my $exonindex (0..$#exonstarts) {
 		$exonstarts[$exonindex] += 1;
-		$exonends[$exonindex] += 1;
+#		$exonends[$exonindex] += 1;
 	}
 
 	return ($txstart, $txend, $cdsstart, $cdsend, \@exonstarts, \@exonends);
