@@ -1,0 +1,11 @@
+{
+  "mirna_id" : "hsa-mir-1827",
+  "mature_name": ["hsa-miR-1827"],
+  "chr": "12",
+  "start": 100189884,
+  "end": 100189949,
+  "strand": "+",
+  "mature_from": [100189932],
+  "mature_to": [100189949],
+  "mature_acc": ["MIMAT0006767"]
+}

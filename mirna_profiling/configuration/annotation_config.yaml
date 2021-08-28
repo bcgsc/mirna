@@ -1,0 +1,131 @@
+Database Resource:
+  # GFF
+
+  # miRBase GFF3 since release 18
+  # Download from miRBase FTP site or use local file
+  # mirbase_gff : $RESOURCE_DIR/mirbase_$MIRBASE_VERSION_$SPECIES_CODE.gff3
+  mirbase_gff : ftp://mirbase.org/pub/mirbase/$MIRBASE_VERSION/genomes/$SPECIES_CODE.gff3
+  
+  # MySQL Database
+  ucsc_host : genome-mysql.soe.ucsc.edu
+  ucsc_user : genome
+  ucsc_password :
+
+  # mirbase_host :
+  # mirbase_user :
+  # mirbase_password :
+
+  ensembl_host : ensembldb.ensembl.org
+  ensembl_user : anonymous
+  ensembl_password :
+
+  ucsc_rest_url: https://api.genome.ucsc.edu
+
+Canned Query:
+  # UCSC MySQL 
+  gene_query : >
+            SELECT xref.geneSymbol, gene.name, chrom, strand, txStart, txEnd, cdsStart, cdsEnd, exonStarts, exonEnds, xref.description
+            FROM $GENE_TABLE gene
+            JOIN kgXref xref on xref.$GENE_FK = gene.name
+
+  xref_query : SELECT geneSymbol, kgID, refseq, description FROM kgXref
+
+  repeat_query : SELECT genoName, genoStart, genoEnd, strand, repName, repClass FROM $REPEAT_TABLE
+
+  ucsc_gene_tables: [knownGene, refGene]
+
+  ucsc_chr_exclude_pattern: [".+_fix$", ".+_alt$", "^chr[0-9a-zA-Z]+_random$"]
+
+  ucsc_repeat_fields: [genoName, genoStart, genoEnd, strand, repName, repClass]
+
+  # miRBase MySQL
+  mirna_species_query : SELECT distinct organism FROM mirna_species
+
+  # mature_to and mature_from are coordinates of mirna_mature relative to mirna.
+  # They are in mirna_mature in miRBase v19 and earlier, and mirna_pre_mature in v20 and later.
+  # mirna_pre_mature also contains id mappings between mirna_mature and mirna.
+  mirna_query : >
+        SELECT m.mirna_id,
+        ma.mature_name,
+        c.xsome as chr,
+        c.contig_start as start,
+        c.contig_end as end,
+        c.strand,
+        mature_from,
+        mature_to,
+        ma.mature_acc
+        FROM mirna m
+        JOIN mirna_chromosome_build c ON m.auto_mirna = c.auto_mirna
+        JOIN mirna_pre_mature p ON m.auto_mirna = p.auto_mirna
+        JOIN mirna_mature ma ON p.auto_mature = ma.auto_mature
+        JOIN mirna_species ms ON m.auto_species = ms.auto_id
+        WHERE ms.organism = '$SPECIES_CODE'
+
+
+Feature Annotation:
+  bin_size : 1000
+  minimum_overlap : 3
+  mirna_stemloop_start : 1
+  mirna_stemloop_end : 6
+
+  mito_chrs : [chrM, M, MT, chrMT]
+
+  feature_priority :
+        -    mature
+        -    star
+        -    precursor
+        -    stemloop
+        -    unannotated
+        -    snoRNA
+        -    tRNA
+        -    rRNA
+        -    snRNA
+        -    scRNA
+        -    srpRNA
+        -    rmsk RNA
+        -    Non-Coding Exon
+        -    3 UTR
+        -    5 UTR
+        -    Coding Exon
+        -    Intron
+        -    LINE 
+        -    SINE 
+        -    LTR 
+        -    Satellite 
+        -    rmsk DNA
+        -    rmsk Low complexity
+        -    rmsk Simple repeat
+        -    rmsk Other
+        -    rmsk Unknown
+
+  feature_type_display_label:
+    RNA: rmsk RNA
+    DNA: rmsk DNA
+    Low_complexity: rmsk Low complexity
+    Simple_repeat: rmsk Simple repeat
+    Other: rmsk Other
+    Unknown: rmsk Unknown
+
+  feature_type_csv_header:
+    mature: mature miRNA
+    star: star miRNA
+    precursor: precursor miRNA
+    stemloop: miRNA loop
+    unannotated: unannotated miRNA
+    3 UTR: 3' UTR
+    5 UTR: 5' UTR
+    rmsk RNA: Other RepeatMasker RNAs
+    rmsk DNA: RepeatMasker DNA
+    rmsk Low complexity: RepeatMasker Low complexity
+    rmsk Simple repeat: RepeatMasker Simple repeat
+    rmsk Other: RepeatMasker Other
+    rmsk Unknown: RepeatMasker Unknown
+
+
+Alignment Stat:
+#most mismatches allowed in the alignment, according to NM flag
+  MAX_NM : 0
+#number of alignments a read can have, as run by `bwa samse -n`
+  MAX_XA : 10
+#most alignments a read can have, i.e., the smaller of number of alignments in X0 and of annotations in XA
+  MAX_X0 : 3

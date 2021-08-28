@@ -1,0 +1,13 @@
+{
+    "geneSymbol": "ELN",
+    "name": "ENST00000621115.4",
+    "chrom": "chr7",
+    "strand": "+",
+    "txStart": 74027788,
+    "txEnd": 74069899,
+    "cdsStart": 74037710,
+    "cdsEnd": 74066650,
+    "exonStarts": "74027788,74035363,74037706,74065693,74066731,74068656,",
+    "exonEnds": "74028269,74035414,74037739,74065732,74066776,74069899,",
+    "description": "Homo sapiens elastin (ELN), transcript variant 12, mRNA. (from RefSeq NM_001278918)"
+}

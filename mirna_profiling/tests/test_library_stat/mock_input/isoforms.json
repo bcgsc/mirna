@@ -1,0 +1,34 @@
+{
+    "hsa-mir-200b": {
+        "chr1 1167125 1167145 +": {
+            "count": 1,
+            "crossmapped": 0,
+            "seq": "ATCTTACTGGGCAGCATTGGA",
+            "annot": "mature,MIMAT0004571"
+        },
+        "chr1 1167160 1167182 +": {
+            "count": 14,
+            "crossmapped": 0,
+            "seq": "TAATACTGCCTGGTAATGATGAC",
+            "annot": "mature,MIMAT0000318"
+        },
+        "chr1 1167160 1167181 +": {
+            "count": 5,
+            "crossmapped": 0,
+            "seq": "TAATACTGCCTGGTAATGATGA",
+            "annot": "mature,MIMAT0000318"
+        },
+        "chr1 1167160 1167180 +": {
+            "count": 2,
+            "crossmapped": 0,
+            "seq": "TAATACTGCCTGGTAATGATG",
+            "annot": "mature,MIMAT0000318"
+        },
+        "chr1 1167161 1167182 +": {
+            "count": 1,
+            "crossmapped": 0,
+            "seq": "AATACTGCCTGGTAATGATGAC",
+            "annot": "mature,MIMAT0000318"
+        }
+    }
+}

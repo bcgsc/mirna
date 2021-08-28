@@ -1,0 +1,11 @@
+{
+  "mirna_id" : "hsa-let-7a-2",
+  "mature_name": ["hsa-let-7a","hsa-let-7a-2*"],
+  "chr": "11",
+  "start": 122017230,
+  "end": 122017301,
+  "strand": "-",
+  "mature_from": [5,50],
+  "mature_to": [26,71],
+  "mature_acc": ["MIMAT0000062","MIMAT0010195"]
+}

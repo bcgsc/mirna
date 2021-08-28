@@ -1,0 +1,11 @@
+{
+  "mirna_id": "hsa-mir-943",
+  "mature_name": "hsa-miR-943",
+  "chr": "chr4",
+  "start": 1986384,
+  "end" :1986477,
+  "strand": "-",
+  "mature_from": [55],
+  "mature_to": [75],
+  "mature_acc": ["MIMAT0004986"]
+}
